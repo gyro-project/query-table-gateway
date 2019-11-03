@@ -1,0 +1,17 @@
+{
+    "name": "beberlei/delta-dbal-table-gateway",
+    "description": "Table Gateway with Doctrine DBAL mapping to objects with typed properties",
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "Delta\\TableGateway\\": "src/"
+        }
+    },
+    "require": {
+        "doctrine/dbal": "^2.9",
+        "doctrine/inflector": "^1.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.4"
+    }
+}

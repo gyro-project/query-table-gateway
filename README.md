@@ -8,6 +8,9 @@ The idea is to assemble SQL Query, information about the columns/types from
 the queries metadata and a fully typed target class into an easy to use
 object relational mapper.
 
+Currently this library only implements read functionality, that means
+the direction from database to objects.
+
 ## Example
 
 In this query for a list of users, its organizations are joined into the result
@@ -50,18 +53,7 @@ $users = $userListItemQuery->findLastSeenUsers();
 
 ## Operations
 
-The Gateway class provides the following methods:
-
-### Fetch a Single Object by Id from Table
-
-```php
-interface Gateway
-{
-    public function findOneById(string $className, string $tableName, $id) : ?object;
-}
-
-$user = $gateway->findOneById(UserView::class, 'users', 1);
-```
+The Gateway class provides the following two methods:
 
 ### Fetch a Single Object by SQL
 
@@ -86,41 +78,18 @@ interface Gateway
 $categories = $gateway->findBySql(CategoryItem::class, 'SELECT * FROM category');
 ```
 
-### Insert Object into Database
-
-```php
-interface Gateway
-{
-    public function insert(string $tableName, object $object) : void;
-}
-
-class User
-{
-    public int $id;
-    public string $email;
-    public \DateTime $createdAt;
-}
-
-$user = new User();
-$user->email = 'foo@example.com';
-$user->createdAt = new \DateTime('now');
-
-$gateway->insert('users', $user);
-// INSERT INTO users (email, created_at) VALUES ('foo@example.com', '2019-06-30 10:53:00')
-```
-
 ## Automatic Type Mapping
 
 While mapping database rows to objects, this gateway looks at the property types and uses Doctrine DBAL Type system and the actual SQL column types for conversion:
 
-| PHP Object Type | Doctrine Type | SQL Type       |
-| --------------- | ------------- | -------------- |
-| int             | integer       | integer types  |
-| string          | string        | varchar types  |
-| DateTime        | datetime      | datetime types |
-| array           | simple_array  | varchar types  |
-| array           | json_array    | json types     |
-| bool            | boolean       | tinyint/bool   |
+| PHP Object Type   | Doctrine Type   | SQL Type       |
+| ----------------- | --------------- | -------------- |
+| `int`             | `integer`       | integer types  |
+| `string`          | `string`        | varchar types  |
+| `DateTime`        | `datetime`      | datetime types |
+| `array`           | `simple_array`  | varchar types  |
+| `array`           | `json_array`    | json types     |
+| `bool`            | `boolean`       | tinyint/bool   |
 
 When fetching the gateway looks at the combination of SQL Type and PHP object
 type of a field and decides which Doctrine type to use.
