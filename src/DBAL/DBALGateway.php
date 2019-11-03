@@ -4,7 +4,9 @@ namespace Delta\TableGateway\DBAL;
 
 use Doctrine\DBAL\Connection;
 use Generator;
+
 use Delta\TableGateway\Mapper\Mapper;
+use Delta\TableGateway\Gateway;
 
 class DBALGateway implements Gateway
 {
@@ -43,7 +45,7 @@ class DBALGateway implements Gateway
     private function getMapper(string $className) : Mapper
     {
         if (!isset($this->mappers[$className])) {
-            $this->mappers[$className] = new Mapper($className);
+            $this->mappers[$className] = new Mapper($className, $this->connection->getDatabasePlatform());
         }
 
         return $this->mappers[$className];
