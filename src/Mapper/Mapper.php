@@ -36,6 +36,9 @@ class Mapper
         $this->platform        = $platform;
     }
 
+    /**
+     * @param array<string,string> $row
+     */
     public function mapRowToObject(array $row) : object
     {
         $object = $this->reflectionClass->newInstanceWithoutConstructor();
@@ -66,7 +69,7 @@ class Mapper
 
         /** @psalm-suppress UndefinedMethod */
         if (! $reflection->hasType()) {
-            throw new RuntimeException("{$this->className}::{$propertyName} is missing a type or class declaration.");
+            throw new RuntimeException(sprintf('%s::%s is missing a type or class declaration.', $this->className, $propertyName));
         }
 
         /** @psalm-suppress UndefinedMethod */

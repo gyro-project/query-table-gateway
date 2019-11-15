@@ -20,6 +20,10 @@ class DBALGateway implements Gateway
         $this->connection = $connection;
     }
 
+    /**
+     * @param mixed[] $parameters
+     * @param mixed[] $types
+     */
     public function findOneBySql(string $className, string $sql, array $parameters = [], array $types = []) : ?object
     {
         $rows = $this->connection->fetchAll($sql, $parameters, $types);
@@ -33,6 +37,10 @@ class DBALGateway implements Gateway
         return $mapper->mapRowToObject($rows[0]);
     }
 
+    /**
+     * @param mixed[] $parameters
+     * @param mixed[] $types
+     */
     public function findBySql(string $className, string $sql, array $parameters = [], array $types = []) : Generator
     {
         $statement = $this->connection->executeQuery($sql, $parameters, $types);

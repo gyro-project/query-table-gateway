@@ -9,7 +9,6 @@
     <arg value="nps"/>
 
     <file>./src</file>
-    <file>./tests</file>
     <exclude-pattern>./vendor/*</exclude-pattern>
 
     <!-- Include full Doctrine Coding Standard -->
