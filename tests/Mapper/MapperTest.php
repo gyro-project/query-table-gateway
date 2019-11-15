@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta\TableGateway\Mapper;
+namespace Dyke\TableGateway\Mapper;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\Platforms\MySqlPlatform;

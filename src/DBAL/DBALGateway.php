@@ -1,12 +1,12 @@
 <?php
 
-namespace Delta\TableGateway\DBAL;
+namespace Dyke\TableGateway\DBAL;
 
 use Doctrine\DBAL\Connection;
 use Generator;
 
-use Delta\TableGateway\Mapper\Mapper;
-use Delta\TableGateway\Gateway;
+use Dyke\TableGateway\Mapper\Mapper;
+use Dyke\TableGateway\Gateway;
 
 class DBALGateway implements Gateway
 {

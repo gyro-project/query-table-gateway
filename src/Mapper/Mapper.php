@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta\TableGateway\Mapper;
+namespace Dyke\TableGateway\Mapper;
 
 use ReflectionClass;
 use Doctrine\Common\Inflector\Inflector;

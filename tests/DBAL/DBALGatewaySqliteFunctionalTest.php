@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta\TableGateway\DBAL;
+namespace Dyke\TableGateway\DBAL;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\DriverManager;

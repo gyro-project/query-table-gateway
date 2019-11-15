@@ -1,6 +1,6 @@
 <?php
 
-namespace Delta\TableGateway;
+namespace Dyke\TableGateway;
 
 use Generator;
 

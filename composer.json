@@ -1,10 +1,10 @@
 {
-    "name": "beberlei/delta-dbal-table-gateway",
+    "name": "dyke/dbal-table-gateway",
     "description": "Table Gateway with Doctrine DBAL mapping to objects with typed properties",
     "license": "mit",
     "autoload": {
         "psr-4": {
-            "Delta\\TableGateway\\": "src/"
+            "Dyke\\TableGateway\\": "src/"
         }
     },
     "require": {
