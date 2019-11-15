@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dyke\TableGateway\Mapper;
 
-use ReflectionClass;
 use Doctrine\Common\Inflector\Inflector;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Type;
+use ReflectionClass;
+use RuntimeException;
 
 class Mapper
 {
@@ -30,7 +33,7 @@ class Mapper
         $this->className = $className;
         /** @psalm-suppress ArgumentTypeCoercion */
         $this->reflectionClass = new ReflectionClass($className);
-        $this->platform = $platform;
+        $this->platform        = $platform;
     }
 
     public function mapRowToObject(array $row) : object
@@ -38,7 +41,7 @@ class Mapper
         $object = $this->reflectionClass->newInstanceWithoutConstructor();
 
         foreach ($row as $columnName => $value) {
-            if (!isset($this->columnsToProperties[$columnName])) {
+            if (! isset($this->columnsToProperties[$columnName])) {
                 $this->columnsToProperties[$columnName] = $this->mapColumnToProperty($columnName);
             }
 
@@ -57,20 +60,20 @@ class Mapper
 
         $reflection = $this->reflectionClass->getProperty($propertyName);
 
-        if (!$reflection->isPublic()) {
+        if (! $reflection->isPublic()) {
             $reflection->setAccessible(true);
         }
 
         /** @psalm-suppress UndefinedMethod */
-        if (!$reflection->hasType()) {
-            throw new \RuntimeException("{$this->className}::{$propertyName} is missing a type or class declaration.");
+        if (! $reflection->hasType()) {
+            throw new RuntimeException("{$this->className}::{$propertyName} is missing a type or class declaration.");
         }
 
         /** @psalm-suppress UndefinedMethod */
         $type = $reflection->getType()->getName();
 
-        if (!isset(self::$simpleTypeMap[$type])) {
-            throw new \RuntimeException(sprintf(
+        if (! isset(self::$simpleTypeMap[$type])) {
+            throw new RuntimeException(sprintf(
                 'When mapping row to %s::%s could not map "%s" to simple type.',
                 $this->className,
                 $propertyName,

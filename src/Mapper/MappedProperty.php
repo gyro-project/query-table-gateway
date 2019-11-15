@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dyke\TableGateway\Mapper;
 
 use Doctrine\DBAL\Types\Type;
@@ -14,7 +16,7 @@ class MappedProperty
     public function __construct(string $propertyName, Type $mappedType, ReflectionProperty $reflection)
     {
         $this->propertyName = $propertyName;
-        $this->mappedType = $mappedType;
-        $this->reflection = $reflection;
+        $this->mappedType   = $mappedType;
+        $this->reflection   = $reflection;
     }
 }

@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dyke\TableGateway\Mapper;
 
-use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
+use PHPUnit\Framework\TestCase;
 
 class MapperTest extends TestCase
 {
-    public function testMapRowToObjectSimple()
+    public function testMapRowToObjectSimple() : void
     {
         $platform = new MySqlPlatform();
-        $mapper = new Mapper(Simple::class, $platform);
-        $object = $mapper->mapRowToObject([
+        $mapper   = new Mapper(Simple::class, $platform);
+        $object   = $mapper->mapRowToObject([
             'number' => '1234',
             'text' => 'foobar',
             'flag' => '1',

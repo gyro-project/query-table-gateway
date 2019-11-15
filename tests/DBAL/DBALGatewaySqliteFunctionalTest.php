@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dyke\TableGateway\DBAL;
 
-use PHPUnit\Framework\TestCase;
+use DateTime;
 use Doctrine\DBAL\DriverManager;
+use PHPUnit\Framework\TestCase;
 
 class DBALGatewaySqliteFunctionalTest extends TestCase
 {
@@ -13,10 +16,10 @@ class DBALGatewaySqliteFunctionalTest extends TestCase
     public function setUp() : void
     {
         $this->connection = DriverManager::getConnection(['url' => 'sqlite://:memory:']);
-        $this->gateway = new DBALGateway($this->connection);
+        $this->gateway    = new DBALGateway($this->connection);
     }
 
-    public function testBasicFetchSql()
+    public function testBasicFetchSql() : void
     {
         $this->connection->exec(<<<SQL
             CREATE TABLE basic (id INTEGER, text VARCHAR, flag BOOLEAN, amount FLOAT)
@@ -41,7 +44,7 @@ class DBALGatewaySqliteFunctionalTest extends TestCase
         $this->assertSame(456.5, $objects[1]->amount);
     }
 
-    public function testDateTypeFetchSql()
+    public function testDateTypeFetchSql() : void
     {
         $this->connection->exec(<<<SQL
             CREATE TABLE DateRecord (id INTEGER, created DATETIME)
@@ -70,5 +73,5 @@ class Basic
 class DateRecord
 {
     public int $id;
-    public \DateTime $created;
+    public DateTime $created;
 }

@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dyke\TableGateway\DBAL;
 
 use Doctrine\DBAL\Connection;
-use Generator;
-
-use Dyke\TableGateway\Mapper\Mapper;
 use Dyke\TableGateway\Gateway;
+use Dyke\TableGateway\Mapper\Mapper;
+use Generator;
 
 class DBALGateway implements Gateway
 {
@@ -35,7 +36,7 @@ class DBALGateway implements Gateway
     public function findBySql(string $className, string $sql, array $parameters = [], array $types = []) : Generator
     {
         $statement = $this->connection->executeQuery($sql, $parameters, $types);
-        $mapper = $this->getMapper($className);
+        $mapper    = $this->getMapper($className);
 
         while ($row = $statement->fetch()) {
             yield $mapper->mapRowToObject($row);
@@ -44,7 +45,7 @@ class DBALGateway implements Gateway
 
     private function getMapper(string $className) : Mapper
     {
-        if (!isset($this->mappers[$className])) {
+        if (! isset($this->mappers[$className])) {
             $this->mappers[$className] = new Mapper($className, $this->connection->getDatabasePlatform());
         }
 
