@@ -1,8 +1,9 @@
 # Table/Query Gateway with Doctrine DBAL
 
-This is a very simple Table/Query Gateway library on top of DBAL (with some ORM
-mapping support). It requires PHP 7.4's property types for automatic mapping
-between SQL queries and objects.
+This is a very simple Table/Query Gateway library on top of [Doctrine
+DBAL](https://github.com/doctrine/dbal) (with some ORM mapping support). It
+requires PHP 7.4's property types for automatic mapping between SQL queries and
+objects.
 
 The idea is to assemble SQL Query, information about the columns/types from
 the queries metadata and a fully typed target class into an easy to use
@@ -11,6 +12,24 @@ object relational mapper.
 Currently this library only implements read functionality, that means
 the direction from database to objects.
 
+## Installation
+
+Via Composer:
+
+    composer require dyke-php/dbal-table-gateway
+
+Setup in code:
+
+```php
+use Doctrine\DBAL\DriverManager;
+use Dyke\TableGateway\DBAL\DBALGateway;
+
+$connection = DriverManager::getConnection($config);
+$gateway = new DBALGateway($connection);
+```
+
+See API below the examples.
+
 ## Example
 
 In this query for a list of users, its organizations are joined into the result
@@ -18,6 +37,8 @@ as a group contact string, which is then mapped to an array by `explode(',', $tr
 
 ```php
 <?php
+
+use Dyke\TableGateway\Gateway;
 
 class UserListItem
 {
@@ -28,7 +49,7 @@ class UserListItem
 
 class UserListItemQuery
 {
-    private $gateway;
+    private Gateway $gateway;
 
     public function __construct(Gateway $gateway)
     {
@@ -47,7 +68,7 @@ class UserListItemQuery
     }
 }
 
-$userListItemQuery = new UserListItemQuery(new Gateway($connection));
+$userListItemQuery = new UserListItemQuery($gateway);
 $users = $userListItemQuery->findLastSeenUsers();
 ```
 
