@@ -28,6 +28,8 @@ class Mapper
         'DateTimeImmutable' => 'datetime_immutable',
     ];
 
+    private static array $databaseTypeMap = ['json' => 'json_array'];
+
     public function __construct(string $className, AbstractPlatform $platform)
     {
         $this->className = $className;
@@ -38,14 +40,15 @@ class Mapper
 
     /**
      * @param array<string,string> $row
+     * @param array<string,string> $columnMeta
      */
-    public function mapRowToObject(array $row) : object
+    public function mapRowToObject(array $row, array $columnMeta = []) : object
     {
         $object = $this->reflectionClass->newInstanceWithoutConstructor();
 
         foreach ($row as $columnName => $value) {
             if (! isset($this->columnsToProperties[$columnName])) {
-                $this->columnsToProperties[$columnName] = $this->mapColumnToProperty($columnName);
+                $this->columnsToProperties[$columnName] = $this->mapColumnToProperty($columnName, $columnMeta[$columnName] ?? '');
             }
 
             $mappedProperty = $this->columnsToProperties[$columnName];
@@ -57,7 +60,10 @@ class Mapper
         return $object;
     }
 
-    private function mapColumnToProperty(string $columnName) : MappedProperty
+    /**
+     * @param array<string,string> $columnMeta
+     */
+    private function mapColumnToProperty(string $columnName, string $columnType) : MappedProperty
     {
         $propertyName = Inflector::camelize($columnName);
 
@@ -75,17 +81,23 @@ class Mapper
         /** @psalm-suppress UndefinedMethod */
         $type = $reflection->getType()->getName();
 
-        if (! isset(self::$simpleTypeMap[$type])) {
-            throw new RuntimeException(sprintf(
-                'When mapping row to %s::%s could not map "%s" to simple type.',
-                $this->className,
-                $propertyName,
-                $type
-            ));
+        if (isset(self::$databaseTypeMap[$columnType])) {
+            $mapType = Type::getType(self::$databaseTypeMap[$columnType]);
+
+            return new MappedProperty($propertyName, $mapType, $reflection);
         }
 
-        $mapType = Type::getType(self::$simpleTypeMap[$type]);
+        if (isset(self::$simpleTypeMap[$type])) {
+            $mapType = Type::getType(self::$simpleTypeMap[$type]);
 
-        return new MappedProperty($propertyName, $mapType, $reflection);
+            return new MappedProperty($propertyName, $mapType, $reflection);
+        }
+
+        throw new RuntimeException(sprintf(
+            'When mapping row to %s::%s could not map "%s" to simple type.',
+            $this->className,
+            $propertyName,
+            $type
+        ));
     }
 }

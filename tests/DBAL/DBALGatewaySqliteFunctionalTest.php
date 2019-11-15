@@ -60,6 +60,19 @@ class DBALGatewaySqliteFunctionalTest extends TestCase
         $this->assertContainsOnly(DateRecord::class, $objects);
         $this->assertSame(1, $objects[0]->id);
     }
+
+    public function testJsonTypeConversion() : void
+    {
+        $this->connection->exec(<<<SQL
+            CREATE TABLE json_data (id INTEGER, data JSON)
+        SQL);
+
+        $this->connection->insert('json_data', ['id' => 1, 'data' => '{"foo": "bar"}']);
+
+        $object = $this->gateway->findOneBySql(JsonData::class, 'SELECT * FROM json_data');
+
+        $this->assertEquals(['foo' => 'bar'], $object->data);
+    }
 }
 
 class Basic
@@ -74,4 +87,10 @@ class DateRecord
 {
     public int $id;
     public DateTime $created;
+}
+
+class JsonData
+{
+    public int $id;
+    public array $data;
 }
