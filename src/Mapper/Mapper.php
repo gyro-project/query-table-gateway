@@ -12,7 +12,6 @@ class Mapper
     private string $className;
     private ReflectionClass $reflectionClass;
     private AbstractPlatform $platform;
-    private array $reflectionProperties = [];
     private array $columnsToProperties = [];
 
     private static array $simpleTypeMap = [
@@ -29,6 +28,7 @@ class Mapper
     public function __construct(string $className, AbstractPlatform $platform)
     {
         $this->className = $className;
+        /** @psalm-suppress ArgumentTypeCoercion */
         $this->reflectionClass = new ReflectionClass($className);
         $this->platform = $platform;
     }
@@ -61,10 +61,12 @@ class Mapper
             $reflection->setAccessible(true);
         }
 
+        /** @psalm-suppress UndefinedMethod */
         if (!$reflection->hasType()) {
             throw new \RuntimeException("{$this->className}::{$propertyName} is missing a type or class declaration.");
         }
 
+        /** @psalm-suppress UndefinedMethod */
         $type = $reflection->getType()->getName();
 
         if (!isset(self::$simpleTypeMap[$type])) {
