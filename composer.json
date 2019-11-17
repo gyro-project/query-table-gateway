@@ -1,5 +1,5 @@
 {
-    "name": "gyro/dbal-table-gateway",
+    "name": "gyro/query-table-gateway",
     "description": "Table/Query Gateway with Doctrine DBAL mapping to objects with typed properties",
     "license": "mit",
     "autoload": {
