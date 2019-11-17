@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dyke\TableGateway\DBAL;
+namespace Gyro\TableGateway\DBAL;
 
 use DateTime;
 use Doctrine\DBAL\DriverManager;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dyke\TableGateway\DBAL;
+namespace Gyro\TableGateway\DBAL;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\ResultStatement;
-use Dyke\TableGateway\Gateway;
-use Dyke\TableGateway\Mapper\Mapper;
+use Gyro\TableGateway\Gateway;
+use Gyro\TableGateway\Mapper\Mapper;
 use Generator;
 
 class DBALGateway implements Gateway

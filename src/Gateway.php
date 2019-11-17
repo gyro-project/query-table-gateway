@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dyke\TableGateway;
+namespace Gyro\TableGateway;
 
 use Generator;
 

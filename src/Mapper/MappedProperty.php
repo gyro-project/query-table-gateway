@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dyke\TableGateway\Mapper;
+namespace Gyro\TableGateway\Mapper;
 
 use Doctrine\DBAL\Types\Type;
 use ReflectionProperty;

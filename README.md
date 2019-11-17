@@ -22,7 +22,7 @@ Setup in code:
 
 ```php
 use Doctrine\DBAL\DriverManager;
-use Dyke\TableGateway\DBAL\DBALGateway;
+use Gyro\TableGateway\DBAL\DBALGateway;
 
 $connection = DriverManager::getConnection($config);
 $gateway = new DBALGateway($connection);
@@ -38,7 +38,7 @@ as a group contact string, which is then mapped to an array by `explode(',', $tr
 ```php
 <?php
 
-use Dyke\TableGateway\Gateway;
+use Gyro\TableGateway\Gateway;
 
 class UserListItem
 {

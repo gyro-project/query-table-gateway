@@ -1,10 +1,10 @@
 {
-    "name": "dyke/dbal-table-gateway",
-    "description": "Table Gateway with Doctrine DBAL mapping to objects with typed properties",
+    "name": "gyro/dbal-table-gateway",
+    "description": "Table/Query Gateway with Doctrine DBAL mapping to objects with typed properties",
     "license": "mit",
     "autoload": {
         "psr-4": {
-            "Dyke\\TableGateway\\": "src/"
+            "Gyro\\TableGateway\\": "src/"
         }
     },
     "require": {
