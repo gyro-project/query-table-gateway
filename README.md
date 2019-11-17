@@ -16,7 +16,7 @@ the direction from database to objects.
 
 Via Composer:
 
-    composer require dyke-php/dbal-table-gateway
+    composer require gyro/query-table-gateway
 
 Setup in code:
 
